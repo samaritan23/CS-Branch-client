@@ -11,7 +11,7 @@ import { AddIcon } from "@chakra-ui/icons";
 
 import { ChatState } from "../context/ChatProvider";
 import ChatLoading from "./ChatLoading";
-import { getSender } from "../config/ChatLogics";
+import { getSender } from "../config/ChatLogic";
 import GroupChatModal from "./miscellaneous/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {

@@ -12,7 +12,7 @@ import {
 import io from "socket.io-client";
 
 import { ChatState } from "../context/ChatProvider";
-import { getSender, getSenderFull } from "../config/ChatLogics";
+import { getSender, getSenderFull } from "../config/ChatLogic";
 import ProfileModal from "./miscellaneous/ProfileModal";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import ScrollableChat from "./ScrollableChat";

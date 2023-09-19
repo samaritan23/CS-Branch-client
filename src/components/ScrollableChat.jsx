@@ -8,7 +8,7 @@ import {
   isSameSender,
   isSameSenderMargin,
   isSameUser,
-} from "../config/ChatLogics";
+} from "../config/ChatLogic";
 import { ChatState } from "../context/ChatProvider";
 import typingAnimation from "../animations/typing.json";
 

@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Home, Chat } from "./pages";
+import Home from "./pages/Home";
+import Chat from "./pages/Chat";
 
 import "./App.css";
 

@@ -11,7 +11,8 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Login, Signup } from "../components";
+import Login from "../components/Authentication/Login";
+import Signup from "../components/Authentication/Signup";
 
 const Home = () => {
     const navigate = useNavigate();

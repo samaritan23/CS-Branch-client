@@ -28,7 +28,7 @@ import {
   import ProfileModal from "./ProfileModal";
   import ChatLoading from "../ChatLoading";
   import UserListItem from "../UserAvatar/UserListItem";
-  import { getSender } from "../../config/ChatLogics";
+  import { getSender } from "../../config/ChatLogic";
   import "../../App.css";
   
   const SideDrawer = () => {
