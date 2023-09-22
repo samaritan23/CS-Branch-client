@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Stack,
   Text,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
 
 import { ChatState } from "../context/ChatProvider";
 import ChatLoading from "./ChatLoading";
 import { getSender } from "../config/ChatLogic";
-import GroupChatModal from "./miscellaneous/GroupChatModal";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -23,7 +20,7 @@ const MyChats = ({ fetchAgain }) => {
 
   const fetchChats = async () => {
     try {
-      const response = await fetch(`/api/chat`, {
+      const response = await fetch(`http://localhost:5000/api/chat`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -73,16 +70,7 @@ const MyChats = ({ fetchAgain }) => {
         justifyContent="space-between"
         alignItems="center"
       >
-        My Chats
-        <GroupChatModal>
-          <Button
-            display="flex"
-            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
-          >
-            New Group Chat
-          </Button>
-        </GroupChatModal>
+        {user.isAgent ? "Customers" : "Agents"}
       </Box>
 
       <Box
@@ -95,13 +83,13 @@ const MyChats = ({ fetchAgain }) => {
         borderRadius="lg"
         overflowY="hidden"
       >
-        {chats ? (
+        {chats && loggedUser ? (
           <Stack overflowY="scroll">
             {chats.map((chat) => (
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                bg={selectedChat === chat ? "#4FCDFF" : "#E8E8E8"}
                 color={selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
@@ -109,9 +97,7 @@ const MyChats = ({ fetchAgain }) => {
                 key={chat._id}
               >
                 <Text>
-                  {!chat.isGroupChat
-                    ? getSender(loggedUser, chat.users)
-                    : chat.chatName}
+                  {getSender(loggedUser, chat.agent, chat.customer)}
                 </Text>
               </Box>
             ))}

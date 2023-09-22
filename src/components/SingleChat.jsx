@@ -14,7 +14,6 @@ import io from "socket.io-client";
 import { ChatState } from "../context/ChatProvider";
 import { getSender, getSenderFull } from "../config/ChatLogic";
 import ProfileModal from "./miscellaneous/ProfileModal";
-import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import ScrollableChat from "./ScrollableChat";
 
 const ENDPOINT = "http://localhost:5000"; // If you are deploying the app, replace the value with "https://YOUR_DEPLOYED_APPLICATION_URL" then run "npm run build" to create a production build
@@ -41,7 +40,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     try {
       setLoading(true);
 
-      const response = await fetch(`/api/message/${selectedChat._id}`, {
+      const response = await fetch(`http://localhost:5000/api/message/${selectedChat._id}`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -87,9 +86,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
         !selectedChatCompare ||
-        selectedChatCompare._id !== newMessageRecieved.chat[0]._id
+        selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notification.includes(newMessageRecieved)) {
+          console.log("Coming Inside")
           setNotification([newMessageRecieved, ...notification]);
           setFetchAgain(!fetchAgain); // Fetch all the chats again
         }
@@ -108,7 +108,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       try {
         setNewMessage(""); // Clear message field before making API call (won't affect API call as the function is asynchronous)
 
-        const response = await fetch("/api/message", {
+        const response = await fetch("http://localhost:5000/api/message", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${user.token}`,
@@ -120,6 +120,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           }),
         });
         const data = await response.json();
+        // console.log(data)
 
         socket.emit("new message", data);
         setNewMessage("");
@@ -182,21 +183,10 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               icon={<ArrowBackIcon />}
               onClick={() => setSelectedChat("")}
             />
-            {!selectedChat.isGroupChat ? (
-              <>
-                {getSender(user, selectedChat.users)}
-                <ProfileModal user={getSenderFull(user, selectedChat.users)} />
-              </>
-            ) : (
-              <>
-                {selectedChat.chatName.toUpperCase()}
-                <UpdateGroupChatModal
-                  fetchAgain={fetchAgain}
-                  setFetchAgain={setFetchAgain}
-                  fetchMessages={fetchMessages}
-                />
-              </>
-            )}
+            <>
+              {getSender(user, selectedChat.agent, selectedChat.customer)}
+              <ProfileModal user={getSenderFull(user, selectedChat.agent, selectedChat.customer)} />
+            </>
           </Text>
 
           <Box
@@ -250,7 +240,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           h="100%"
         >
           <Text fontSize="3xl" pb="3" fontFamily="Work sans">
-            Click on a user to start chatting
+            Click on a customer to start chatting
           </Text>
         </Box>
       )}

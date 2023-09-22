@@ -1,7 +1,7 @@
 import {
     Container,
     Box,
-    Text,
+    Image,
     Tab,
     TabList,
     TabPanel,
@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom";
 
 import Login from "../components/Authentication/Login";
 import Signup from "../components/Authentication/Signup";
+import BranchInternational from "../images/BranchInternational.png"
 
 const Home = () => {
     const navigate = useNavigate();
@@ -37,9 +38,9 @@ const Home = () => {
                 borderRadius="lg"
                 borderWidth="1px"
             >
-                <Text fontSize="4xl" fontFamily="Work sans" textAlign="center">
-                    Bit Chat
-                </Text>
+                <Box display='flex' justifyContent='center' alignItems='center'>
+                    <Image width='80px' src={BranchInternational} alt='Dan Abramov' />
+                </Box>
             </Box>
 
             <Box bg="white" w="100%" p={4} borderRadius="lg" borderWidth="1px">
