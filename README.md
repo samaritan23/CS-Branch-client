@@ -33,7 +33,7 @@ cd cs-branch-client
 Run the following command once in the server and client directories to install the necessary dependencies
 
 ```bash
-npm install # Server dependencies
+npm install # Client dependencies
 ```
 
 ### 4. Run project:
